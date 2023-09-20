@@ -5,6 +5,44 @@ import os
 import csv
 import sys
 
+def remove_empyt(grid):
+	for i in range(np.shape(grid)[0]):
+		for j in range(1, np.shape(grid)[1]-1):
+			if grid[i, j] == 0 and (grid[i, j-1] != 0 and grid[i, j+2] != 0):
+				grid[i, j] = (grid[i, j-1] + grid[i, j+2]) / 2
+	return grid
+
+def BIG_grid(dir_name):
+
+	names = os.listdir(dir_name)
+
+	x_min = 373628
+	x_max = 625631
+	y_min = 28485
+	y_max = 196483
+
+	x_size = (x_max-x_min)//100 + 1
+	y_size = (y_max-y_min)//100 + 1
+
+	grid = np.empty((y_size, x_size))
+
+	dir_name = dir_name+'\\'
+
+	for name in names:
+		with open(dir_name+name) as file:
+			xyz = np.loadtxt(file, dtype=float)
+
+		xyz = np.round(xyz)
+
+		XYZ = xyz.astype(int)
+
+		for i in range(np.shape(XYZ)[0]):
+			x_ind = (XYZ[i,0]-x_min)//100
+			y_ind = (XYZ[i,1]-y_min)//100
+			grid[y_size-1-y_ind, x_ind] = XYZ[i,2]
+
+	return grid
+
 def x_to_grid(val):
 	off_left = 11
 	off_right = 2490
