@@ -1,10 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import os
-
 import csv
-import sys
-
 def remove_empyt(grid):
 	for i in range(np.shape(grid)[0]):
 		for j in range(1, np.shape(grid)[1]-1):
@@ -26,8 +23,7 @@ def BIG_grid(dir_name):
 
 	grid = np.empty((y_size, x_size))
 
-	dir_name = dir_name+'\\'
-
+	dir_name = dir_name+'/'
 	for name in names:
 		with open(dir_name+name) as file:
 			xyz = np.loadtxt(file, dtype=float)

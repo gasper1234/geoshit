@@ -1,7 +1,12 @@
 from geoshit_fun import *
+import csv
 
 # make grid of elevations (map) form data
-grid = BIG_grid('DMV1000')
+try:
+	grid = np.load('BIGgrid_.npy')
+except:
+	grid = BIG_grid('DMV1000')
+	np.save('BIGgrid', grid)
 
 # grid correction (averages empty elements)
 grid = remove_empyt(grid)
@@ -17,7 +22,7 @@ fig, ax = plt.subplots()
 
 pic = ax.imshow(mask(grid, init_mask))
 
-# draw border
+# draw country border
 
 csv.field_size_limit(10**7)
 
@@ -55,7 +60,7 @@ with open('SLO_meja.csv') as csv_file:
 
 		i += 1
 
-# end od drawing border
+# end od drawing country border
 
 # textbox
 
